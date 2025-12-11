@@ -55,3 +55,28 @@ class Solution(object):
                 j+=1
             i+=1
         return j
+    
+
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i, j = 0, len(nums) - 1
+        swaps = 0
+
+        while i <= j:
+            # move j left until nums[j] != val or j < 0
+            while j >= 0 and nums[j] == val:
+                j -= 1
+            # move i right until nums[i] == val or i >= len(nums)
+            while i < len(nums) and nums[i] != val:
+                i += 1
+
+            if i < j:
+                nums[i], nums[j] = nums[j], nums[i]
+                swaps += 1
+                i += 1
+                j -= 1
+
+        # after loop, i is the first index that may contain val (or i == len(nums))
+        # number of non-val elements is the count of indices < i that are non-val
+        return sum(1 for x in nums[:i] if x != val)
+        
